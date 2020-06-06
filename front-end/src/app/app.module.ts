@@ -7,13 +7,17 @@ import { LoadFileComponent } from './about-files/load-file/load-file.component';
 import { RecentFilesComponent } from './about-files/recent-files/recent-files.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { HomeComponent } from './home/home.component';
+import { AnalyticsComponent } from './analytics/analytics.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoadFileComponent,
-    RecentFilesComponent
+    RecentFilesComponent,
+    HomeComponent,
+    AnalyticsComponent
   ],
   imports: [
     BrowserModule,
