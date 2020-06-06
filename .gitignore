@@ -1,0 +1,20 @@
+#credentials
+front-end/credentials
+
+# compiled output
+front-end/dist
+front-end/tmp
+
+# dependencies
+front-end/node_modules
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# e2e
+front-end/e2e/*.js
+front-end/e2e/*.map

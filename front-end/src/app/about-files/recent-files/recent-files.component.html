@@ -1,0 +1,47 @@
+<div class="row">
+	<i *ngIf="loading" class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+	<div *ngIf="error != null" class="alert alert-danger" role="alert">{{error}}</div>
+	<div *ngIf="success != null" class="alert alert-success" role="alert">{{success}}</div>
+	<table class="table">
+		<thead>
+			<tr>
+			<th scope="col">#</th>
+			<th scope="col">Id</th>
+			<th scope="col">Name</th>
+			<th scope="col">URL</th>
+			<th scope="col">Last Modified</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let file of files; let i = index">
+			<th scope="row">{{i + 1}}</th>
+			<td>{{file.id}}</td>
+			<td>{{file.name}}</td>
+			<td>{{file.url}}</td>
+			<td>{{file.last_modified}}</td>
+			<td><button [disabled]="file.busy" type="button" (click)="setCurrentFile(file)" class="btn btn-primary"  data-toggle="modal" data-target="#editModal">Edit <i class="fa fa-spinner fa-spin fa-3x fa-fw" *ngIf="file.busy"></i></button></td>
+			<td><button [disabled]="file.busy" type="button" (click)="remove(file)" class="btn btn-danger">- <i class="fa fa-spinner fa-spin fa-3x fa-fw" *ngIf="file.busy"></i></button></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="modal fade" id="editModal" role="dialog">
+	<div *ngIf="currentFile != null" class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">{{currentFile.name}}</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body">
+				<form [formGroup]="form">
+					<div class="form-group">
+						<input type="text"  class="form-control" formControlName="name">
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" [disabled]="form.invalid" class="btn btn-primary" data-dismiss="modal" (click)="edit(currentFile)">Apply</button>
+			</div>
+		</div>
+	</div>
+</div>
