@@ -1,6 +1,9 @@
 #credentials
 front-end/credentials
 
+#credentials
+front-end/generator
+
 # compiled output
 front-end/dist
 front-end/tmp
@@ -9,6 +12,7 @@ front-end/tmp
 front-end/node_modules
 
 # IDE - VSCode
+.vscode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json

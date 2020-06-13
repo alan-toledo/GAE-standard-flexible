@@ -23,7 +23,8 @@ export class FilesService {
 	getMessage(): Observable<any> {
         return this.subject.asObservable();
 	}
-	
+    
+    //POST: Insert register in Datastore
 	uploadFile(formData: FormData): Observable<any>{
 		return this.http.post('/api/upload', formData, {responseType: 'text'}).pipe(
 			map((message: any) => {
@@ -33,7 +34,7 @@ export class FilesService {
 			})
 		 )
 	}
-
+    //GET: Get registers from Datastore
 	getFiles(): Observable<any>{
 		return this.http.get('/api/files').pipe(
 			map((message: any) => {
@@ -45,7 +46,7 @@ export class FilesService {
 			})
 		 )
 	}
-
+    //PUT: Update register in Datastore
 	editFile(file: File): Observable<any>{
 		return this.http.put('/api/update/' + file.id, file).pipe(
 			map((message: any) => {
@@ -55,7 +56,7 @@ export class FilesService {
 			})
 		 )
 	}
-	
+	//DELETE: Remove register in DataStore
 	removeFile(file: File): Observable<any>{
 		let filename = file.url.split('/').pop()
 		return this.http.delete('/api/remove/' + file.id + '/' + filename).pipe(

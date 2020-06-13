@@ -8,6 +8,9 @@
 #
 .gcloudignore
 
+#metadata
+generator/
+
 # compiled output
 tmp/
 

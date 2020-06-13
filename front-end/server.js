@@ -23,8 +23,8 @@ const api = require('./api');
 const PORT = process.env.PORT || 8080;
 
 /* Static Path */
-app.use(bodyParser.json()); //req.body
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({limit: 500 * 1024 * 1024})); 
+app.use(bodyParser.urlencoded({limit: 500 * 1024 * 1024, extended: true, parameterLimit:500000}));
 
 app.use(express.static(path.join(__dirname, 'dist')));
 

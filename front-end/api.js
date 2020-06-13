@@ -11,6 +11,7 @@ const CLOUD_BUCKET =  process.env.GCLOUD_STORAGE_BUCKET || 'appdataanalytics_fil
 let keyFilename = path.join(__dirname, './credentials/AppDataAnalytics-9a7ad22f250e.json');
 let obj = JSON.parse(fs.readFileSync(keyFilename, 'utf8'));
 let projectId = obj["project_id"];
+
 const storage = new Storage({projectId, keyFilename}); // Instantiate a storage client
 const datastore = new Datastore({projectId, keyFilename}); // Instantiate a datastore client
 
@@ -18,7 +19,7 @@ const datastore = new Datastore({projectId, keyFilename}); // Instantiate a data
 const multer = Multer({
     storage: Multer.memoryStorage(),
     limits: {
-      fileSize: 50 * 1024 * 1024, // no larger than 50mb, you can change as needed.
+      fileSize: 500 * 1024 * 1024, // no larger than 500mb, you can change as needed.
     },
 });
 
@@ -53,8 +54,10 @@ router.delete('/remove/:fileId/:filename', (req, res, next) => {
 	(async() => {
 		try {
 			const fileId = parseInt(req.params.fileId)
-			const filename = req.params.filename
-			await deleteRegister(fileId);
+            const filename = req.params.filename
+            //Delete register in DataStore
+            await deleteRegister(fileId);
+             //Delete object file in BUCKET
 			await BUCKET.file(filename).delete();
 			res.status(200).send({fileId: fileId});
 		} catch (err) {
@@ -67,7 +70,7 @@ router.put('/update/:fileId', (req, res, next) => {
 	console.log('/update/:fileId', req.params.fileId, req.body);
 	(async() => {
 		try {
-			const fileId = parseInt(req.params.fileId) //Important Parse
+			const fileId = parseInt(req.params.fileId) //Important Parse to DataStore
 			const register = {name: req.body['name'], url: req.body['url'], last_modified: new Date()}
 			await editRegister(fileId, register);
 			req.body['last_modified'] = register['last_modified'];
@@ -82,7 +85,8 @@ router.get('/files', (req, res, next) => {
 	console.log('/files');
 	(async() => {
 		try {
-			let result = await getRegisters();
+            let result = await getRegisters();
+            //Transform data (map) to include id (auto-generated) in DataStore.
 			let files = result[0].map(function(x) {
 				x['id'] = x[datastore.KEY].id
 				return x;
@@ -94,6 +98,7 @@ router.get('/files', (req, res, next) => {
 	})();
 });
 
+//A object file is uploaded a bucket, if it is successful, a register in datastore is created.
 router.post('/upload', multer.single('file'), (req, res, next) => {
 	console.log('/upload', req.file);
 	if (!req.file) {
@@ -119,7 +124,8 @@ router.post('/upload', multer.single('file'), (req, res, next) => {
 			(async() => {
 				//body-parser --> req.body['name'])
 				let register = {name: req.body['name'], url: req.file.cloudStoragePublicUrl, last_modified: new Date()}
-				console.log('/upload -->', register);
+                console.log('/upload -->', register);
+                //Insert register in Datastore
 				await insertRegister(register);
 				res.status(200).send(req.file.cloudStoragePublicUrl);
 			})();
