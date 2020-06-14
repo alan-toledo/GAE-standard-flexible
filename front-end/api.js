@@ -34,8 +34,17 @@ async function insertRegister(register) {
 	return datastore.save({key: datastore.key('file'), data: register});
 }
 
-async function getRegisters() {
-	const query = datastore.createQuery('file').order('last_modified', {descending: true})
+let pageSize = 5;
+let lastVisible = null;
+
+async function getRegisters(step) {
+    const query = datastore.createQuery('file');
+    if (step == true && lastVisible != null){
+        //Get a number of files according pageSize and lastVisible
+        query.filter('last_modified', '<' , lastVisible).order('last_modified', {descending: true}).limit(pageSize);
+    }else{
+        query.order('last_modified', {descending: true}).limit(pageSize);
+    }
 	return datastore.runQuery(query);
 };
 
@@ -81,16 +90,17 @@ router.put('/update/:fileId', (req, res, next) => {
 	})();
 });
 
-router.get('/files', (req, res, next) => {
+router.get('/files/:step', (req, res, next) => {
 	console.log('/files');
 	(async() => {
 		try {
-            let result = await getRegisters();
+            let result = await getRegisters('true' == req.params.step);
             //Transform data (map) to include id (auto-generated) in DataStore.
 			let files = result[0].map(function(x) {
-				x['id'] = x[datastore.KEY].id
+                x['id'] = x[datastore.KEY].id
+                lastVisible = x['last_modified'];
 				return x;
-			});
+            });
 			res.status(200).send(files);
 		} catch (err) {
 			res.status(500).send({status:"error", message: err.message});

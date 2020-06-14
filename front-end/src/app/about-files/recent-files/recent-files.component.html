@@ -14,7 +14,7 @@
 		</thead>
 		<tbody>
 			<tr *ngFor="let file of files; let i = index">
-			<th scope="row">{{i + 1}}</th>
+			<th scope="row">{{i + 1 + index}}</th>
 			<td>{{file.id}}</td>
 			<td>{{file.name}}</td>
 			<td>{{file.url}}</td>
@@ -23,7 +23,14 @@
 			<td><button [disabled]="file.busy" type="button" (click)="remove(file)" class="btn btn-danger">- <i class="fa fa-spinner fa-spin fa-3x fa-fw" *ngIf="file.busy"></i></button></td>
 			</tr>
 		</tbody>
-	</table>
+    </table>
+    <div class="col"></div>
+    <div class="col"></div>
+    <div class="col">
+        <button [disabled]="loading" style="width: 100%;" type="button" (click)="getRecentFiles(true)" class="btn btn-primary">... <i class="fa fa-spinner fa-spin fa-3x fa-fw" *ngIf="loading"></i></button>
+    </div>
+    <div class="col"></div>
+    <div class="col"></div>
 </div>
 <div class="modal fade" id="editModal" role="dialog">
 	<div *ngIf="currentFile != null" class="modal-dialog">

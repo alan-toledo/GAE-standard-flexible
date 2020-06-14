@@ -35,8 +35,8 @@ export class FilesService {
 		 )
 	}
     //GET: Get registers from Datastore
-	getFiles(): Observable<any>{
-		return this.http.get('/api/files').pipe(
+	getFiles(step: boolean): Observable<any>{
+		return this.http.get('/api/files/' + String(step)).pipe(
 			map((message: any) => {
 				return message.map(obj => {
 					return new File(obj.id, obj.name, obj.url, obj.last_modified);

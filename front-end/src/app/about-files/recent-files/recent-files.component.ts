@@ -13,7 +13,9 @@ import { Subscription } from 'rxjs';
 
 export class RecentFilesComponent implements OnInit {
 
-	loading: boolean = false;
+    index: number = 0;
+    pageSize: number = 5;
+    loading: boolean = false;
 	success: string = null;
 	error: string = null;
 	files: File[] = [];
@@ -24,12 +26,12 @@ export class RecentFilesComponent implements OnInit {
 		// Subscription to load-file-component
 		//If a new file is uploaded, a new resquest it is done.
         this.subscription = this.fileService.subject.subscribe(message => {
-			this.getRecentFiles();
+			this.getRecentFiles(false);
 		});
 	}
 
 	ngOnInit() {
-		this.getRecentFiles();
+		this.getRecentFiles(false);
 	}
 
 	createForm(value: string) {
@@ -37,12 +39,14 @@ export class RecentFilesComponent implements OnInit {
 		this.form = this.fb.group({name: [value, Validators.required]});
 	}
 
-	getRecentFiles(){
+	getRecentFiles(step){
 		this.loading = true;
 		this.error = null;
 		//asynchronous: subscription to get files in fileService
-		this.fileService.getFiles().subscribe(
+		this.fileService.getFiles(step).subscribe(
 			(res) => {
+                if(step){this.index = this.index + this.pageSize}
+                if(!step){this.index = 0}
 				this.files = res;
 				this.loading = false;
 			},(err) => {
@@ -50,8 +54,8 @@ export class RecentFilesComponent implements OnInit {
 				this.error = "Failed to get recent files.";
 				this.loading = false;
 		});
-	}
-
+    }
+    
 	setCurrentFile(file){
 		//Se current file to edit (modal)
 		this.currentFile = file;
