@@ -12,16 +12,10 @@ This application uses two services based on App Engine Standard: Front-End (CRUD
 - Google Cloud Datastore
 - Node.js
 
-# Front-End Execution
-- npm start
-
 # Back-End
 - Google Cloud Storage
 - Flask 1.1.2
 - Python 3.7
-
-# Back-End Execution
-- python main.py
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

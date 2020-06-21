@@ -22,7 +22,7 @@ const datastore = new Datastore({projectId, keyFilename}); // Instantiate a data
 const multer = Multer({
     storage: Multer.memoryStorage(),
     limits: {
-      fileSize: 500 * 1024 * 1024, // no larger than 500mb, you can change as needed.
+      fileSize: 600 * 1024 * 1024, // no larger than 500mb, you can change as needed.
     },
 });
 
@@ -32,14 +32,14 @@ const BUCKET = storage.bucket(CLOUD_BUCKET);
 function getPublicUrl (filename) {
 	return `https://storage.googleapis.com/${CLOUD_BUCKET}/${filename}`;
 }
-
+//Insert DataStore
 async function insertRegister(register) {
 	return datastore.save({key: datastore.key('file'), data: register});
 }
 
+//Load pageSize register for request
 let pageSize = 5;
 let lastVisible = null;
-
 async function getRegisters(step) {
     const query = datastore.createQuery('file');
     if (step == true && lastVisible != null){
@@ -50,17 +50,17 @@ async function getRegisters(step) {
     }
 	return datastore.runQuery(query);
 };
-
+//Delete from DataStore
 async function deleteRegister(fileId) {
 	const fileKey = datastore.key(['file', fileId]);
 	return datastore.delete(fileKey);
 };
-
+//Update from DataStore
 async function editRegister(fileId, register) {
 	const fileKey = datastore.key(['file', fileId]);
 	return datastore.save({key: fileKey, data: register});
 };
-
+//Delete from DataStore and Storage (file in bucket)
 router.delete('/remove/:fileId/:filename', (req, res, next) => {
 	console.log('/remove/:fileId/:filename', req.params.fileId, req.params.filename);
 	(async() => {
@@ -77,7 +77,7 @@ router.delete('/remove/:fileId/:filename', (req, res, next) => {
 		}
 	})();
 });
-
+//Update register datastore
 router.put('/update/:fileId', (req, res, next) => {
 	console.log('/update/:fileId', req.params.fileId, req.body);
 	(async() => {
@@ -92,7 +92,7 @@ router.put('/update/:fileId', (req, res, next) => {
 		}
 	})();
 });
-
+//Get registers according pageSize
 router.get('/files/:step', (req, res, next) => {
 	console.log('/files');
 	(async() => {
@@ -157,7 +157,7 @@ async function getResponse(url){
         console.log(error);
     }
 };
-//A object file is uploaded a bucket, if it is successful, a register in datastore is created.
+//A request to backend, stats of the filename is returned
 router.get('/process/:filename', (req, res, next) => {
     console.log('/process')
     const filename = req.params.filename

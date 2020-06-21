@@ -21,12 +21,14 @@ export class AnalyticsComponent implements OnInit {
 		this.getRecentFiles(false);
     }
 
+    //Return stats from filename. Request to the service back-end
     viewFile(file: File){
         this.dict = {}
         this.loading = true;
 		this.error = null;
         this.fileService.processFile(file.url.split('/').pop()).subscribe(
 			(res) => {
+                //Res is a dictionary object from python
                 this.dict = res;
                 this.loading = false;
 			},(err) => {
@@ -36,6 +38,7 @@ export class AnalyticsComponent implements OnInit {
 		});
     }
 
+    //Convert keys to array
     keys() : Array<string> {
         return Object.keys(this.dict);
 	}

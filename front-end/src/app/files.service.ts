@@ -24,6 +24,7 @@ export class FilesService {
         return this.subject.asObservable();
     }
     
+    //Get: Get stats from filename
 	processFile(filename): Observable<any>{
 		return this.http.get('/api/process/' + filename).pipe(
 			map((message: any) => {

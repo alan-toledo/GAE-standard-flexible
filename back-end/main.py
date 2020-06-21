@@ -34,8 +34,10 @@ def root():
 def process():
     
     filename = request.args.get('filename', default = None, type = str)
+    #Class File: File is stored fully in memory file to process.
     myFile = File(filename, bucket)
     for header in myFile.headers:
+        #Class Stats: Compute stats from a column with values.
         myStats = Stats(myFile.temp_values[header])
         myStats.stats_from_scratch()
         myStats.std_from_scratch()
@@ -44,6 +46,7 @@ def process():
         myFile.headers[header]['n'] = myStats.n
         myFile.headers[header]['mean'] = myStats.mean
         myFile.headers[header]['std'] = myStats.std
+    print(json.dumps(myFile.headers, sort_keys=True))
     return json.dumps(myFile.headers, sort_keys=True)
 
 if __name__ == '__main__':
