@@ -7,11 +7,11 @@ const fetch = require("node-fetch");
 const {Datastore} = require('@google-cloud/datastore');
 const {Storage} = require('@google-cloud/storage');
 
-const CLOUD_BUCKET =  process.env.GCLOUD_STORAGE_BUCKET || 'appdataanalytics_file';
+const CLOUD_BUCKET =  process.env.GCLOUD_STORAGE_BUCKET;
 const BACKEND =  'http://localhost:8181';
 
 
-let keyFilename = path.join(__dirname, './credentials/AppDataAnalytics-9a7ad22f250e.json');
+let keyFilename = path.join('PATH_YOUR_CREDENTIALS');
 let obj = JSON.parse(fs.readFileSync(keyFilename, 'utf8'));
 let projectId = obj["project_id"];
 

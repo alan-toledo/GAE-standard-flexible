@@ -20,8 +20,8 @@ from file import File
 from google.cloud import storage
 from flask import Flask, render_template, request
 
-CLOUD_BUCKET = os.environ.get('GCLOUD_STORAGE_BUCKET') or 'appdataanalytics_file'
-client = storage.Client.from_service_account_json('./credentials/AppDataAnalytics-9a7ad22f250e.json')
+CLOUD_BUCKET = os.environ.get('GCLOUD_STORAGE_BUCKET')
+client = storage.Client.from_service_account_json('PATH_YOUR_CREDENTIALS')
 bucket = client.get_bucket(CLOUD_BUCKET)
 
 app = Flask(__name__)
