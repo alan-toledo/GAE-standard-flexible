@@ -1,22 +1,27 @@
-# App Engine Standard
+# App Engine Standard: Google Cloud Storage, Google Cloud Datastore, Node.js, Python3
 
-En this repository
+In this application you can upload a csv file for analyze its content. For each csv file uploaded (Google Cloud Storage) a record will be created that is based in RESTful API on Google Cloud Datastore through Express.js (Node.js).
 
-## Installation
+This application uses two services based on App Engine Standard: Front-End (CRUD) and Back-End (Compute)
 
+# Front-End
+- Angular 7.2.0
+- Bootstrap 4.4.1
+- Express.js
+- Google Cloud Storage
+- Google Cloud Datastore
+- Node.js
 
-```bash
-...
-```
+# Front-End Execution
+- npm start
 
-## Automate App Engine deployments with Cloud Build
+# Back-End
+- Google Cloud Storage
+- Flask 1.1.2
+- Python 3.7
 
-### Cloud Build Triggers pre-configuration
-
-* APIs & Services: App Engine Admin API, Cloud Build API must be enabled.
-
-* In Cloud Build Settings must set the status of the App Engine Admin role to Enable.
-
+# Back-End Execution
+- python main.py
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

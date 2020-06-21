@@ -3,10 +3,13 @@ const router = express.Router();
 const Multer = require('multer');
 const fs = require('fs');
 const path = require('path');
+const fetch = require("node-fetch");
 const {Datastore} = require('@google-cloud/datastore');
 const {Storage} = require('@google-cloud/storage');
 
 const CLOUD_BUCKET =  process.env.GCLOUD_STORAGE_BUCKET || 'appdataanalytics_file';
+const BACKEND =  'http://localhost:8181';
+
 
 let keyFilename = path.join(__dirname, './credentials/AppDataAnalytics-9a7ad22f250e.json');
 let obj = JSON.parse(fs.readFileSync(keyFilename, 'utf8'));
@@ -143,6 +146,30 @@ router.post('/upload', multer.single('file'), (req, res, next) => {
 		});
 	});
 	stream.end(req.file.buffer);
+});
+
+async function getResponse(url){
+    try {
+        const response = await fetch(url);
+        const json = await response.json();
+        return json;
+    } catch (error) {
+        console.log(error);
+    }
+};
+//A object file is uploaded a bucket, if it is successful, a register in datastore is created.
+router.get('/process/:filename', (req, res, next) => {
+    console.log('/process')
+    const filename = req.params.filename
+    let url = BACKEND + '/process?filename=' + filename;
+    (async() => {
+		try {
+            let response = await getResponse(url);
+			res.status(200).send(response).end();
+		} catch (err) {
+			res.status(500).send({status:"error", message: err.message});
+		}
+	})();
 });
 
   

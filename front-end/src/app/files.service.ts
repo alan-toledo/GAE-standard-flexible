@@ -22,6 +22,16 @@ export class FilesService {
 	
 	getMessage(): Observable<any> {
         return this.subject.asObservable();
+    }
+    
+	processFile(filename): Observable<any>{
+		return this.http.get('/api/process/' + filename).pipe(
+			map((message: any) => {
+				return message;
+			}), catchError( error => {
+				return throwError(error);
+			})
+		 )
 	}
     
     //POST: Insert register in Datastore

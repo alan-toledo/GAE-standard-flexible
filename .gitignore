@@ -1,8 +1,9 @@
 #credentials
 front-end/credentials
-
-#credentials
-front-end/generator
+back-end/credentials
+back-end/*.pyc
+#generator
+generator
 
 # compiled output
 front-end/dist

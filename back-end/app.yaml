@@ -1,5 +1,7 @@
 runtime: python37
 service: backend
+env_variables:
+  GCLOUD_STORAGE_BUCKET: appdataanalytics_file
 handlers:
   # This configures Google App Engine to serve the files in the app's static
   # directory.

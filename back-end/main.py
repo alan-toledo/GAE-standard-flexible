@@ -13,8 +13,16 @@
 # limitations under the License.
 
 # [START gae_python37_render_template]
+import os
+import json
+from stats import Stats
+from file import File
+from google.cloud import storage
+from flask import Flask, render_template, request
 
-from flask import Flask, render_template
+CLOUD_BUCKET = os.environ.get('GCLOUD_STORAGE_BUCKET') or 'appdataanalytics_file'
+client = storage.Client.from_service_account_json('./credentials/AppDataAnalytics-9a7ad22f250e.json')
+bucket = client.get_bucket(CLOUD_BUCKET)
 
 app = Flask(__name__)
 
@@ -22,10 +30,21 @@ app = Flask(__name__)
 def root():
     return render_template('index.html')
 
-
-@app.route("/test")
-def test():
-    return "Hello World from second_back_end"
+@app.route("/process")
+def process():
+    
+    filename = request.args.get('filename', default = None, type = str)
+    myFile = File(filename, bucket)
+    for header in myFile.headers:
+        myStats = Stats(myFile.temp_values[header])
+        myStats.stats_from_scratch()
+        myStats.std_from_scratch()
+        myFile.headers[header]['min'] = myStats.min
+        myFile.headers[header]['max'] = myStats.max
+        myFile.headers[header]['n'] = myStats.n
+        myFile.headers[header]['mean'] = myStats.mean
+        myFile.headers[header]['std'] = myStats.std
+    return json.dumps(myFile.headers, sort_keys=True)
 
 if __name__ == '__main__':
     # This is used when running locally only. When deploying to Google App
@@ -35,5 +54,5 @@ if __name__ == '__main__':
     # the "static" directory. See:
     # http://flask.pocoo.org/docs/1.0/quickstart/#static-files. Once deployed,
     # App Engine itself will serve those files as configured in app.yaml.
-    app.run(host='127.0.0.1', port=3030, debug=True)
+    app.run(host='127.0.0.1', port=8181, debug=True)
 # [START gae_python37_render_template]
