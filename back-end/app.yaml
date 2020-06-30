@@ -1,5 +1,6 @@
 runtime: python37
 service: backend
+instance_class: F4_1G
 env_variables:
   GCLOUD_STORAGE_BUCKET: appdataanalytics_file
 handlers:

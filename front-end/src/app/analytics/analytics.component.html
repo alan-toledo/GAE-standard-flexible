@@ -12,7 +12,7 @@
             <tbody>
                 <tr *ngFor="let file of files; let i = index">
                     <th scope="row">{{i + 1 + index}}</th>
-                    <td style="cursor: pointer;" (click)="viewFile(file)">{{file.name}}</td>
+                    <td id="{{i + 1 + index}}" style="cursor: pointer;" (click)="viewFile(file)">{{file.name}}</td>
                 </tr>
             </tbody>
         </table>

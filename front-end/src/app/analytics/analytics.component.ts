@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FilesService } from '../files.service';
 import { File } from '../models/file';
+import { Observable} from 'rxjs';
 
 @Component({
   selector: 'app-analytics',
@@ -8,14 +9,16 @@ import { File } from '../models/file';
   styleUrls: ['./analytics.component.css']
 })
 export class AnalyticsComponent implements OnInit {
-
     files: File[] = [];
     dict: any = {}
     index: number = 0;
     pageSize: number = 5;
     loading: boolean = false;
 	error: string = null;
-    constructor(private fileService: FilesService) { }
+    count$: Observable<number>;
+
+    constructor(private fileService: FilesService) {
+    }
 
     ngOnInit() {
 		this.getRecentFiles(false);
@@ -53,11 +56,11 @@ export class AnalyticsComponent implements OnInit {
                 if(step){this.index = this.index + this.pageSize}
                 if(!step){this.index = 0}
 				this.files = res;
-				this.loading = false;
+                this.loading = false;
 			},(err) => {
 				console.log('getFiles', 'Error', err);
 				this.error = "Failed to get recent files.";
-				this.loading = false;
+                this.loading = false;
 		});
     }
 }

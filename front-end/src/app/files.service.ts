@@ -5,16 +5,15 @@ import { map, catchError } from 'rxjs/operators';
 import { File } from './models/file';
 
 
-
 @Injectable({
 	providedIn: 'root'
 })
 
 export class FilesService {
-
 	subject = new Subject<any>();
 
-	constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient) {
+    }
 
 	sendMessage(message: string) {
         this.subject.next({ text: message });
@@ -44,7 +43,8 @@ export class FilesService {
 				return throwError(error);
 			})
 		 )
-	}
+    }
+    
     //GET: Get registers from Datastore
 	getFiles(step: boolean): Observable<any>{
 		return this.http.get('/api/files/' + String(step)).pipe(

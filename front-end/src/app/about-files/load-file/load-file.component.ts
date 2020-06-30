@@ -2,6 +2,8 @@ import {Component, ElementRef, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {FilesService} from '../../files.service';
 
+declare let $: any
+
 @Component({
 	selector: 'app-load-file',
 	templateUrl: './load-file.component.html',
@@ -11,7 +13,8 @@ import {FilesService} from '../../files.service';
 
 export class LoadFileComponent implements OnInit {
 	
-	form: FormGroup;
+    form: FormGroup;
+    form2: FormGroup;
 	uploading: boolean = false;
 	success: string = null;
 	error: string  = null;
@@ -23,8 +26,9 @@ export class LoadFileComponent implements OnInit {
 
 	createForm() {
 		//Form with two fields: tag name file and filepath
-		this.form = this.fb.group({name: ['', Validators.required], file: [null, Validators.required]});
-	}
+        this.form = this.fb.group({name: ['', Validators.required], file: [null, Validators.required]});
+    }
+
 
 	onSubmit(){
 		this.success = null;

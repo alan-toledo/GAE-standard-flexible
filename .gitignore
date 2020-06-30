@@ -1,6 +1,7 @@
 #credentials
 front-end/credentials
 back-end/credentials
+back-end/__pycache__
 back-end/*.pyc
 #generator
 generator

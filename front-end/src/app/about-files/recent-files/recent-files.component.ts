@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { FilesService } from '../../files.service';
 import { File } from '../../models/file';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable} from 'rxjs';
 
 @Component({
   selector: 'app-recent-files',
@@ -12,7 +12,6 @@ import { Subscription } from 'rxjs';
 
 
 export class RecentFilesComponent implements OnInit {
-
     index: number = 0;
     pageSize: number = 5;
     loading: boolean = false;
@@ -21,15 +20,16 @@ export class RecentFilesComponent implements OnInit {
 	files: File[] = [];
 	subscription: Subscription;
 	currentFile: File = null;
-	form: FormGroup;
-	constructor(private fileService: FilesService, private fb: FormBuilder) { 
+    form: FormGroup;
+
+	constructor(public fileService: FilesService, private fb: FormBuilder) {
 		// Subscription to load-file-component
 		//If a new file is uploaded, a new resquest it is done.
         this.subscription = this.fileService.subject.subscribe(message => {
 			this.getRecentFiles(false);
 		});
-	}
-
+    }
+    
 	ngOnInit() {
 		this.getRecentFiles(false);
 	}
@@ -47,8 +47,8 @@ export class RecentFilesComponent implements OnInit {
 			(res) => {
                 if(step){this.index = this.index + this.pageSize}
                 if(!step){this.index = 0}
-				this.files = res;
-				this.loading = false;
+                this.files = res;
+                this.loading = false;
 			},(err) => {
 				console.log('getFiles', 'Error', err);
 				this.error = "Failed to get recent files.";

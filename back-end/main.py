@@ -17,12 +17,11 @@ import os
 import json
 from stats import Stats
 from file import File
-from google.cloud import storage
+import gcsfs
 from flask import Flask, render_template, request
 
-CLOUD_BUCKET = os.environ.get('GCLOUD_STORAGE_BUCKET')
-client = storage.Client.from_service_account_json('PATH_YOUR_CREDENTIALS')
-bucket = client.get_bucket(CLOUD_BUCKET)
+CLOUD_BUCKET = os.environ.get('GCLOUD_STORAGE_BUCKET') or 'appdataanalytics_file'
+fs = gcsfs.GCSFileSystem(token='PATH_YOUR_CREDENTIALS')
 
 app = Flask(__name__)
 
@@ -33,9 +32,9 @@ def root():
 @app.route("/process")
 def process():
     
-    filename = request.args.get('filename', default = None, type = str)
+    filename = request.args.get('filename', default = None, type = str)  
     #Class File: File is stored fully in memory file to process.
-    myFile = File(filename, bucket)
+    myFile = File(fs, filename, CLOUD_BUCKET)
     for header in myFile.headers:
         #Class Stats: Compute stats from a column with values.
         myStats = Stats(myFile.temp_values[header])

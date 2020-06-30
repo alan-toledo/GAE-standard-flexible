@@ -7,7 +7,7 @@ const fetch = require("node-fetch");
 const {Datastore} = require('@google-cloud/datastore');
 const {Storage} = require('@google-cloud/storage');
 
-const CLOUD_BUCKET =  process.env.GCLOUD_STORAGE_BUCKET;
+const CLOUD_BUCKET =  process.env.GCLOUD_STORAGE_BUCKET || 'appdataanalytics_file';
 const BACKEND =  'http://localhost:8181';
 
 

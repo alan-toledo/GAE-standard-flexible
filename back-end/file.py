@@ -1,12 +1,13 @@
 class File:
-    def __init__(self, filename, bucket):
-        self.headers, self.order, self.temp_values, self.filename, self.bucket = {},{},{},filename,bucket
+    def __init__(self, fs, filename, bucket):
+        self.headers, self.order, self.temp_values, self.fs, self.filename, self.bucket = {},{},{},fs,filename,bucket
         self.process()
     
     def process(self):
         if  self.filename != None:
-            blob = self.bucket.get_blob(self.filename)
-            raw_file = blob.download_as_string().decode('utf8').split('\n')
+            with self.fs.open(self.bucket + '/' + self.filename, 'rb') as f:
+                raw_file = f.read().decode('utf8').split('\n')
+
             for row_i, row in enumerate(raw_file):
                 if row_i == 0:
                     list_headers = [str(x).replace('\r','') for x in row.split(',')]

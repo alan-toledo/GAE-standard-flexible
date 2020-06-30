@@ -10,7 +10,6 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { HomeComponent } from './home/home.component';
 import { AnalyticsComponent } from './analytics/analytics.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,4 +29,4 @@ import { AnalyticsComponent } from './analytics/analytics.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

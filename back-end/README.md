@@ -1,5 +1,5 @@
 # Back-End
-This service receives a file to process from bucket (cloud storage).
+- This service receives a file to process from bucket (cloud storage).
 
 # Execution
 - python main.py
