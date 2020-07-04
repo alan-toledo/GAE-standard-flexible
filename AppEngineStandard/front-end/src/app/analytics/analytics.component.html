@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-3">
+        <i *ngIf="loading" class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+        <div *ngIf="error != null" class="alert alert-danger" role="alert">{{error}}</div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let file of files; let i = index">
+                    <th scope="row">{{i + 1 + index}}</th>
+                    <td id="{{i + 1 + index}}" style="cursor: pointer;" (click)="viewFile(file)">{{file.name}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <button [disabled]="loading" style="width: 100%;" type="button" (click)="getRecentFiles(true)" class="btn btn-primary">... <i class="fa fa-spinner fa-spin fa-3x fa-fw" *ngIf="loading"></i></button>
+    </div>
+    <div class="col-8">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Header</th>
+                    <th scope="col">Min</th>
+                    <th scope="col">Max</th>
+                    <th scope="col">n</th>
+                    <th scope="col">Mean</th>
+                    <th scope="col">Std</th>
+                </tr>
+            </thead>
+            <i *ngIf="loading" class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+            <tbody>
+                <tr *ngFor="let key of keys(); let i = index">
+                    <th scope="row">{{i + 1}}</th>
+                    <td>{{key}}</td>
+                    <td>{{dict[key]['min']}}</td>
+                    <td>{{dict[key]['max']}}</td>
+                    <td>{{dict[key]['n']}}</td>
+                    <td>{{dict[key]['mean']}}</td>
+                    <td>{{dict[key]['std']}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col"></div>
+</div>

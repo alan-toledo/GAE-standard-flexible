@@ -15,13 +15,12 @@
 # [START gae_python37_render_template]
 import os
 import json
-from stats import Stats
 from file import File
 import gcsfs
 from flask import Flask, render_template, request
 
 CLOUD_BUCKET = os.environ.get('GCLOUD_STORAGE_BUCKET') or 'appdataanalytics_file'
-fs = gcsfs.GCSFileSystem(token='PATH_YOUR_CREDENTIALS')
+fs = gcsfs.GCSFileSystem(token='./credentials/AppDataAnalytics-9a7ad22f250e.json')
 
 app = Flask(__name__)
 
@@ -35,16 +34,6 @@ def process():
     filename = request.args.get('filename', default = None, type = str)  
     #Class File: File is stored fully in memory file to process.
     myFile = File(fs, filename, CLOUD_BUCKET)
-    for header in myFile.headers:
-        #Class Stats: Compute stats from a column with values.
-        myStats = Stats(myFile.temp_values[header])
-        myStats.stats_from_scratch()
-        myStats.std_from_scratch()
-        myFile.headers[header]['min'] = myStats.min
-        myFile.headers[header]['max'] = myStats.max
-        myFile.headers[header]['n'] = myStats.n
-        myFile.headers[header]['mean'] = myStats.mean
-        myFile.headers[header]['std'] = myStats.std
     print(json.dumps(myFile.headers, sort_keys=True))
     return json.dumps(myFile.headers, sort_keys=True)
 

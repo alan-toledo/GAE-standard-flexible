@@ -1,17 +1,25 @@
-#credentials
-front-end/credentials
-back-end/credentials
-back-end/__pycache__
-back-end/*.pyc
+AppEngineStandard/front-end/credentials
+AppEngineFlexible/front-end/credentials
+
+AppEngineStandard/back-end/credentials
+AppEngineStandard/back-end/__pycache__
+AppEngineStandard/back-end/*.pyc
+
+AppEngineFlexible/back-end/credentials
+AppEngineFlexible/back-end/__pycache__
+AppEngineFlexible/back-end/*.pyc
 #generator
 generator
 
 # compiled output
-front-end/dist
-front-end/tmp
+AppEngineStandard/front-end/dist
+AppEngineFlexible/front-end/dist
+AppEngineStandard/front-end/tmp
+AppEngineFlexible/front-end/tmp
 
 # dependencies
-front-end/node_modules
+AppEngineStandard/front-end/node_modules
+AppEngineFlexible/front-end/node_modules
 
 # IDE - VSCode
 .vscode
@@ -22,5 +30,7 @@ front-end/node_modules
 !.vscode/extensions.json
 
 # e2e
-front-end/e2e/*.js
-front-end/e2e/*.map
+AppEngineStandard/front-end/e2e/*.js
+AppEngineFlexible/front-end/e2e/*.js
+AppEngineStandard/front-end/e2e/*.map
+AppEngineFlexible/front-end/e2e/*.map

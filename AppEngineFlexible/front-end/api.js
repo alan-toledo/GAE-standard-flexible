@@ -11,7 +11,7 @@ const CLOUD_BUCKET =  process.env.GCLOUD_STORAGE_BUCKET || 'appdataanalytics_fil
 const BACKEND =  'http://localhost:8181';
 
 
-let keyFilename = path.join('PATH_YOUR_CREDENTIALS');
+let keyFilename = path.join('YOUR_CREDENTIALS');
 let obj = JSON.parse(fs.readFileSync(keyFilename, 'utf8'));
 let projectId = obj["project_id"];
 
