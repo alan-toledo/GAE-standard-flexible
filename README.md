@@ -1,4 +1,4 @@
-# App Engine Standard: Google Cloud Storage, Google Cloud Datastore, Node.js, Angular 7.2, Python 3.7
+# App Engine (Estandard and Flexible): Google Cloud Storage, Google Cloud Datastore, Node.js, Angular 7.2, Python 3.7
 
 In this application you can upload a csv file for analyze its content. For each csv file uploaded (Google Cloud Storage) a record will be created that is based in RESTful API on Google Cloud Datastore through Express.js (Node.js).
 

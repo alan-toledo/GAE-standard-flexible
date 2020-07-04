@@ -4,7 +4,7 @@
 # Execution
 - npm start (ng build --prod && node server.js)
 
-# TEST: KARMA - JASMINE (BDD)
+# TEST: Karma - Jasmien (BDD)
 - npm test
 
 ## License
