@@ -4,5 +4,22 @@
 # Execution
 - python main.py
 
+# Deploy: Flexible Environment
+- gcloud app deploy
+
+# Create Docker Container Image
+- gcloud builds submit --tag gcr.io/$GCLOUD_PROJECT/backendflex-container
+
+# Create Cluster (Kubernetes Engine)
+- gcloud container clusters create backendflex-cluster --num-nodes 1 --enable-basic-auth --issue-client-certificate --zone $YOUR_ZONE
+
+# Deploy Docker Container Image on a Google Kubernetes Engine (GKE)
+- kubectl apply -f deployment.yaml
+- Check: kubectl get deployments
+- Check: kubectl get pods
+- Check: kubectl logs $POD_NAME
+- kubectl apply -f service.yaml
+- Check kubectl get services
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

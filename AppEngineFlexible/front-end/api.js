@@ -7,8 +7,9 @@ const fetch = require("node-fetch");
 const {Datastore} = require('@google-cloud/datastore');
 const {Storage} = require('@google-cloud/storage');
 
-const CLOUD_BUCKET =  process.env.GCLOUD_STORAGE_BUCKET || 'appdataanalytics_file';
-const BACKEND =  'http://localhost:8181';
+const CLOUD_BUCKET =  process.env.GCLOUD_STORAGE_BUCKET;
+const BACKEND =  'YOUR_BACKEND';
+
 
 
 let keyFilename = path.join('YOUR_CREDENTIALS');
@@ -22,7 +23,7 @@ const datastore = new Datastore({projectId, keyFilename}); // Instantiate a data
 const multer = Multer({
     storage: Multer.memoryStorage(),
     limits: {
-      fileSize: 600 * 1024 * 1024, // no larger than 500mb, you can change as needed.
+      fileSize: 600 * 1024 * 1024, // no larger than 600mb, you can change as needed.
     },
 });
 

@@ -20,8 +20,8 @@ from file import File
 import gcsfs
 from flask import Flask, render_template, request
 
-CLOUD_BUCKET = os.environ.get('GCLOUD_STORAGE_BUCKET') or 'appdataanalytics_file'
-fs = gcsfs.GCSFileSystem(token='./credentials/AppDataAnalytics-9a7ad22f250e.json')
+CLOUD_BUCKET = os.environ.get('GCLOUD_STORAGE_BUCKET')
+fs = gcsfs.GCSFileSystem(token='YOUR_CREDENTIALS')
 
 app = Flask(__name__)
 

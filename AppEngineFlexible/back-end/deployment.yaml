@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backendflex
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backendflex
+  template:
+    metadata:
+      labels:
+        app: backendflex
+    spec:
+      containers:
+      - name: backendflex-app
+        image: gcr.io/$GCLOUD_PROJECT/backendflex-container:latest
+        # This app listens on port 8080 for web traffic by default.
+        ports:
+        - containerPort: 8080
+        env:
+          - name: PORT
+            value: "8080"

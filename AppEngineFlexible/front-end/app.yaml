@@ -15,6 +15,9 @@
 runtime: nodejs
 env: flex
 service: frontend
+env_variables:
+    GCLOUD_STORAGE_BUCKET: appdataanalytics_file
+  
 
 # This sample incurs costs to run on the App Engine flexible environment.
 # The settings below are to reduce costs during testing and are not appropriate
