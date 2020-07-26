@@ -8,7 +8,7 @@ const {Datastore} = require('@google-cloud/datastore');
 const {Storage} = require('@google-cloud/storage');
 
 const CLOUD_BUCKET =  process.env.GCLOUD_STORAGE_BUCKET;
-const BACKEND =  'YOUR_BACKEND';
+const BACKEND =  'http://localhost:8181';
 
 
 let keyFilename = path.join('YOUR_CREDENTIALS');
@@ -22,7 +22,7 @@ const datastore = new Datastore({projectId, keyFilename}); // Instantiate a data
 const multer = Multer({
     storage: Multer.memoryStorage(),
     limits: {
-      fileSize: 600 * 1024 * 1024, // no larger than 600mb, you can change as needed.
+        fileSize: 2000 * 1024 * 1024, // no larger than 2000mb, you can change as needed.
     },
 });
 
@@ -123,8 +123,7 @@ router.post('/upload', multer.single('file'), (req, res, next) => {
 	const stream = file.createWriteStream({
 		metadata: {
 		  contentType: req.file.mimetype
-		},
-		resumable: false
+		}
 	});
 	stream.on('error', (err) => {
 		req.file.cloudStorageError = err;

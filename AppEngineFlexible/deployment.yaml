@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: appflex
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: appflex
+  template:
+    metadata:
+      labels:
+        app: appflex
+    spec:
+      containers:
+      - name: frontendflex-app
+        # Replace $GCLOUD_PROJECT with your project ID
+        image: gcr.io/$GCLOUD_PROJECT/frontendflex-container:latest
+        # This app listens on port 8080 for web traffic by default.
+        ports:
+        - containerPort: 8080
+        env:
+          - name: PORT
+            value: "8080"
+      - name: backendflex-app
+        image: gcr.io/$GCLOUD_PROJECT/backendflex-container:latest
+        # This app listens on port 8080 for web traffic by default.
+        ports:
+        - containerPort: 8181
+        env:
+          - name: PORT
+            value: "8181"

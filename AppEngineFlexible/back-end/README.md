@@ -19,7 +19,7 @@
 - Check: kubectl get pods
 - Check: kubectl logs $POD_NAME
 - kubectl apply -f service.yaml
-- Check kubectl get services
+- Check: kubectl get services
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

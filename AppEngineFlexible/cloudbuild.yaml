@@ -1,0 +1,21 @@
+steps:
+    # Build the container image
+    - name: 'gcr.io/cloud-builders/docker'
+      args: ['build', '-t', 'gcr.io/$GCLOUD_PROJECT/backendflex-container', './back-end/']
+    - name: 'gcr.io/cloud-builders/docker'
+      args: ['build', '-t', 'gcr.io/$GCLOUD_PROJECT/frontendflex-container', './front-end/']
+    # Push the container image to Container Registry
+    - name: 'gcr.io/cloud-builders/docker'
+      args: ['push', 'gcr.io/$GCLOUD_PROJECT/backendflex-container']
+    - name: 'gcr.io/cloud-builders/docker'
+      args: ['push', 'gcr.io/$GCLOUD_PROJECT/frontendflex-container']
+    # Deploy container image to Cloud Run
+    - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+      entrypoint: gcloud
+      args: ['run', 'deploy', 'backendflex-service', '--image', 'gcr.io/$GCLOUD_PROJECT/backendflex-container', '--region', 'us-east1', '--platform', 'managed']
+    - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+      entrypoint: gcloud
+      args: ['run', 'deploy', 'frontendflex-service', '--image', 'gcr.io/$GCLOUD_PROJECT/frontendflex-container', '--region', 'us-east1', '--platform', 'managed']
+images:
+ - gcr.io/$GCLOUD_PROJECT/backendflex-container
+ - gcr.io/$GCLOUD_PROJECT/frontendflex-container

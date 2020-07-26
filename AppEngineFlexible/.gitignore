@@ -1,0 +1,24 @@
+#front-end/credentials
+
+#back-end/credentials
+back-end/__pycache__
+back-end/*.pyc
+
+# compiled output
+front-end/dist
+front-end/tmp
+
+# dependencies
+front-end/node_modules
+
+# IDE - VSCode
+.vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# e2e
+front-end/e2e/*.js
+front-end/e2e/*.map

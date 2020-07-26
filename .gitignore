@@ -8,8 +8,9 @@ AppEngineStandard/back-end/*.pyc
 AppEngineFlexible/back-end/credentials
 AppEngineFlexible/back-end/__pycache__
 AppEngineFlexible/back-end/*.pyc
-#generator
-generator
+
+/generator
+/config
 
 # compiled output
 AppEngineStandard/front-end/dist
